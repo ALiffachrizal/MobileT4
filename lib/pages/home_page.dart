@@ -71,13 +71,12 @@ class _HomePageState extends State<HomePage> {
                   scrollbars: true,
                   dragDevices: {
                     PointerDeviceKind.touch,
-                    PointerDeviceKind.mouse, // <-- biar bisa scroll pakai mouse
+                    PointerDeviceKind.mouse,
                   },
                 ),
                 child: ListView.builder(
                   controller: _scrollController,
-                  physics:
-                      const AlwaysScrollableScrollPhysics(), // biar tetap bisa di-scroll
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: _newsList.length,
                   itemBuilder: (context, index) {
                     return NewsTile(news: _newsList[index]);

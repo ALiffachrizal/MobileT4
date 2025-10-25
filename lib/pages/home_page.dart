@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import '../models/news_model.dart';
 import '../services/news_service.dart';
 import '../widgets/news_tile.dart';
@@ -65,12 +66,23 @@ class _HomePageState extends State<HomePage> {
         onRefresh: _loadNews,
         child: _loading
             ? const Center(child: CircularProgressIndicator())
-            : ListView.builder(
-                controller: _scrollController,
-                itemCount: _newsList.length,
-                itemBuilder: (context, index) {
-                  return NewsTile(news: _newsList[index]);
-                },
+            : ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  scrollbars: true,
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse, // <-- biar bisa scroll pakai mouse
+                  },
+                ),
+                child: ListView.builder(
+                  controller: _scrollController,
+                  physics:
+                      const AlwaysScrollableScrollPhysics(), // biar tetap bisa di-scroll
+                  itemCount: _newsList.length,
+                  itemBuilder: (context, index) {
+                    return NewsTile(news: _newsList[index]);
+                  },
+                ),
               ),
       ),
       floatingActionButton: _showScrollToTop
